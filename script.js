@@ -19,6 +19,6 @@ cards.forEach((emoji, index) => {
   const card = document.createElement('div');
   card.classList.add('card');
   card.dataset.emoji = emoji;
-  card.innerHTML = `<img src="${emoji}" alt="card image">`;
+  card.innerHTML = `<span class="card-content">${emoji}</span>`;
   gameBoard.appendChild(card);
 });
