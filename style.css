@@ -1,0 +1,12 @@
+body {
+    /*標*/
+ font-family: Arial, sans-serif; 
+ text-align: center; 
+  margin: 20px;
+/*背景*/
+    background-image: url("bg.png"); 
+   background-size: cover;       
+  background-position: center;  
+  background-attachment: fixed; 
+
+}
