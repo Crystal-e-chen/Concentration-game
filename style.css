@@ -8,5 +8,26 @@ body {
    background-size: cover;       
   background-position: center;  
   background-attachment: fixed; 
-
+/* 卡牌格子 */
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(4, 100px); /* 4 列，每列 100px */
+  grid-gap: 20px;                          /* 卡牌間距 */
+  justify-content: center;                  /* 水平置中 */
+  margin: 0 auto;
+}
+/* 卡牌格式 */
+.card {
+  background-color: #967a50;
+  color: transparent;
+  width: 100px;
+  height: 100px;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor:pointer;
+  border-radius: 8px;
+  user-select:none;
+}
 }

@@ -15,10 +15,7 @@ let matches = 0;
 
 
 // 初始化生成卡牌元素
-cards.forEach((emoji, index) => {
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.dataset.emoji = emoji;
-  card.innerHTML = `<span class="card-content">${emoji}</span>`;
-  gameBoard.appendChild(card);
+const backs = document.querySelectorAll('#gameBoard .back');
+backs.forEach((back, idx) => {
+  back.textContent = cards[idx]; // 直接放 emoji
 });
