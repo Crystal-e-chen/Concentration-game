@@ -1,4 +1,4 @@
-const emojis = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🦁"];
+cons`t emojis = ["dog..png","cat.png","mouse.png","hamster.png","🐰","🦊","🐻","🦁"];
 // 建立6對卡牌
 let cards = [...emojis, ...emojis];
 // Fisher-Yates 洗牌演算法隨機打亂卡牌順序
@@ -15,10 +15,12 @@ let matches = 0;
 
 
 // 初始化生成卡牌元素
-cards.forEach((emoji, index) => {
+cards.forEach(src => {
   const card = document.createElement('div');
   card.classList.add('card');
-  card.dataset.emoji = emoji;
-  card.innerHTML = `<span class="card-content">${emoji}</span>`;
+  const img = document.createElement('img');
+  img.src = src; // ✅ 使用圖片路徑
+  img.classList.add('card-face');
+  card.appendChild(img);
   gameBoard.appendChild(card);
 });
