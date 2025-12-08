@@ -1,57 +1,20 @@
-<<<<<<< HEAD
-cons`t emojis = ["dog..png","cat.png","mouse.png","hamster.png","🐰","🦊","🐻","🦁"];
-=======
-//const emojis = ["🐶","🐱","🐭","🐹","🐰","🦊","🐻","🦁"];
-// 建立6對卡牌
-//let cards = [...emojis, ...emojis];
-// Fisher-Yates 洗牌演算法隨機打亂卡牌順序
-//for (let i = cards.length - 1; i > 0; i--) {
-  //const j = Math.floor(Math.random() * (i + 1));
-  //[cards[i], cards[j]] = [cards[j], cards[i]];
-//}
-
-
-//const gameBoard = document.querySelector('#gameBoard');
-//let firstCard = null, secondCard = null;
-//let lockBoard = false;
-//let matches = 0;
-
-
-// 初始化生成卡牌元素
-//const backs = document.querySelectorAll('#gameBoard .back');
-//backs.forEach((back, idx) => {
-  //back.textContent = cards[idx]; // 直接放 emoji
-//);
-const emojis = [
-  "./img/dog.png",
-  "./img/cat.png",
-  "./img/mouse.png",
-  "./img/hamster.png",S
-  "./img/rabbit.png",
-  "./img/fox.png",
-  "./img/bear.png",
-  "./img/lion.png"
-];
-
->>>>>>> ffcaded90fd02c3b606d87e5d97f7fc1a6e09b2e
+const emojis = ["dog..png","cat.png","mouse.png","hamster.png","rabbit.png","fox.png","bear.png","lion.png"];
 // 建立6對卡牌
 let cards = [...emojis, ...emojis];
-
-// 隨機洗牌
+// Fisher-Yates 洗牌演算法隨機打亂卡牌順序
 for (let i = cards.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [cards[i], cards[j]] = [cards[j], cards[i]];
 }
+
 
 const gameBoard = document.querySelector('#gameBoard');
 let firstCard = null, secondCard = null;
 let lockBoard = false;
 let matches = 0;
 
-<<<<<<< HEAD
 
 // 初始化生成卡牌元素
-<<<<<<< HEAD
 cards.forEach(src => {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -60,19 +23,54 @@ cards.forEach(src => {
   img.classList.add('card-face');
   card.appendChild(img);
   gameBoard.appendChild(card);
-=======
-const backs = document.querySelectorAll('#gameBoard .back');
-backs.forEach((back, idx) => {
-  back.textContent = cards[idx]; // 直接放 emoji
->>>>>>> cd62e588d753591b11988e6ccf4622b4d86c15fc
-=======
-// 初始化生成卡牌
-const backs = document.querySelectorAll('#gameBoard .back');
-backs.forEach((back, idx) => {
-  const img = document.createElement("img");
-  img.src = cards[idx];
-  img.classList.add("card-img");
-  back.appendChild(img);
->>>>>>> ffcaded90fd02c3b606d87e5d97f7fc1a6e09b2e
+});
+// 建立每張卡片的事件
+gameBoard.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', flipCard);
 });
 
+function flipCard() {
+  if (lockBoard) return;        // 如果正在檢查配對，鎖住
+  if (this === firstCard) return; // 避免點同一張卡
+
+  this.classList.add('flip');   // 加上翻牌樣式
+
+  if (!firstCard) {
+    firstCard = this;           // 記錄第一張
+    return;
+  }
+
+  secondCard = this;            // 記錄第二張
+  lockBoard = true;
+
+  checkMatch();
+}
+
+function checkMatch() {
+  const img1 = firstCard.querySelector('img').src;
+  const img2 = secondCard.querySelector('img').src;
+
+  if (img1 === img2) {
+    // 配對成功
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard);
+    resetBoard();
+    matches += 1;
+
+    // 全部配對成功
+    if (matches === emojis.length) {
+      alert("全部配對成功！");
+    }
+  } else {
+    // 配對失敗 → 翻回去
+    setTimeout(() => {
+      firstCard.classList.remove('flip');
+      secondCard.classList.remove('flip');
+      resetBoard();
+    }, 1000);
+  }
+}
+
+function resetBoard() {
+  [firstCard, secondCard, lockBoard] = [null, null, false];
+}
