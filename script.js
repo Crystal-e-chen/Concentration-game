@@ -15,6 +15,7 @@ let matches = 0;
 
 
 // 初始化生成卡牌元素
+<<<<<<< HEAD
 cards.forEach(src => {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -23,4 +24,9 @@ cards.forEach(src => {
   img.classList.add('card-face');
   card.appendChild(img);
   gameBoard.appendChild(card);
+=======
+const backs = document.querySelectorAll('#gameBoard .back');
+backs.forEach((back, idx) => {
+  back.textContent = cards[idx]; // 直接放 emoji
+>>>>>>> cd62e588d753591b11988e6ccf4622b4d86c15fc
 });
