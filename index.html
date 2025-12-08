@@ -1,40 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-    <!--1.按螢幕大小等比縮放2.標題-->
-    <head>
-        <meta charset="UTF-8"></meta>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <title>memory game</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>翻牌記憶遊戲</h1>
-        
-        <div id="gameBoard" class="grid">
-      <!-- 16 格 -->
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>memory game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
+<body>
+    <h1>翻牌記憶遊戲</h1>
 
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
+    <!-- ❗ 只留下這個，裡面不要手動放卡片 -->
+    <div id="gameBoard"></div>
 
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-    <div class="card"><div class="front"></div><div class="back"></div></div>
-  </div>
-        <p id="message"></p>
+    <p id="message"></p>
 
-        <script src="script.js"></script>
-
-    </body>
+    <script src="script.js"></script>
+</body>
 </html>

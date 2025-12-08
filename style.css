@@ -1,33 +1,80 @@
+/* === 全域與背景設定 === */
 body {
-    /*標*/
- font-family: Arial, sans-serif; 
- text-align: center; 
-  margin: 20px;
-/*背景*/
-    background-image: url("bg.png"); 
-   background-size: cover;       
-  background-position: center;  
-  background-attachment: fixed; 
-  }
-/* 卡牌格子 */
-#gameBoard {
-  display: grid;
-  grid-template-columns: repeat(4, 100px); /* 4 列，每列 100px */
-  grid-gap: 20px;                          /* 卡牌間距 */
-  justify-content: center;                  /* 水平置中 */
-  margin: 0 auto;
+    /* 標題字型 */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    /* 背景圖片 */
+    background-image: url("bg.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
-/* 卡牌格式 */
+
+h1 {
+    color: #333; /* 可根據背景調整標題顏色 */
+}
+
+/* === 遊戲板與卡牌格子設定 === */
+#gameBoard {
+    display: grid;
+    grid-template-columns: repeat(4, 100px); /* 4 列，每列 100px */
+    grid-gap: 20px; /* 卡牌間距 */
+    justify-content: center; /* 水平置中 */
+    margin: 0 auto;
+
+    /* 建立 3D 視角（讓子元素翻轉時有透視） */
+    perspective: 1000px;
+}
+
+/* === 卡牌容器設定 (3D 翻轉的基礎) === */
 .card {
-  background-color: #967a50;
-  color: transparent;
-  width: 100px;
-  height: 100px;
-  font-size: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor:pointer;
-  border-radius: 8px;
-  user-select:none;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 8px;
+    user-select: none;
+
+    position: relative;
+
+    /* 讓子元素在 3D 空間翻轉 */
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+/* 卡片的「背面蓋子」：平常顯示為咖啡色，翻轉時會被旋轉移開 */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* top:0; right:0; bottom:0; left:0; */
+    background: #967a50; /* 棕色卡牌背面的顏色 */
+    border-radius: 8px;
+    backface-visibility: hidden;
+    transform: rotateY(0deg); /* 面向玩家（未翻開） */
+    /* 如果想要背面有陰影或邊框可以在這裡加 */
+}
+
+/* 翻牌時轉整張 card（把 ::before 蓋子轉開） */
+/**.card.flip {
+    transform: rotateY(180deg);
+}
+
+/* === 圖片樣式 (讓 JS 生成的 <img class="card-face"> 填滿卡牌) === */
+.card img.card-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* 圖片完整填滿牌面 */
+    border-radius: 8px;   /* 跟卡片一樣的圓角 */
+    backface-visibility: hidden; /* 翻面時不要閃爍 */
+    transform: rotateY(180deg);  /* 先把圖片面朝下（藏在背後） */
+    display: block;
+    pointer-events: none; /* 圖片不要攔截點擊，點擊在 .card 上處理 */
+}
+
+/* 當卡片被加上 .flip，讓圖片朝上顯示 */
+.card.flip img.card-face {
+    transform: rotateY(0deg);
 }
