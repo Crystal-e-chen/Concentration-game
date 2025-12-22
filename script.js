@@ -1,46 +1,74 @@
-const emojis = ["dog..png","cat.png","mouse.png","hamster.png","rabbit.png","fox.png","bear.png","lion.png"];
-// 建立6對卡牌
+const emojis = [
+  "dog..png","cat.png","mouse.png","hamster.png",
+  "rabbit.png","fox.png","bear.png","lion.png"
+];
+
+// 建立卡牌
 let cards = [...emojis, ...emojis];
-// Fisher-Yates 洗牌演算法隨機打亂卡牌順序
+
+// 洗牌
 for (let i = cards.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [cards[i], cards[j]] = [cards[j], cards[i]];
 }
 
-
 const gameBoard = document.querySelector('#gameBoard');
-let firstCard = null, secondCard = null;
+const timerEl = document.querySelector('#timer');
+const restartBtn = document.querySelector('#restartBtn');
+
+let firstCard = null;
+let secondCard = null;
 let lockBoard = false;
 let matches = 0;
 
+/* ===== 新增：計時 ===== */
+let time = 0;
+let timer = null;
 
-// 初始化生成卡牌元素
+// 初始化卡牌
 cards.forEach(src => {
   const card = document.createElement('div');
   card.classList.add('card');
+
   const img = document.createElement('img');
-  img.src = src; // ✅ 使用圖片路徑
+  img.src = src;
   img.classList.add('card-face');
+
   card.appendChild(img);
   gameBoard.appendChild(card);
 });
-// 建立每張卡片的事件
+
+// 綁定事件
 gameBoard.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', flipCard);
 });
 
-function flipCard() {
-  if (lockBoard) return;        // 如果正在檢查配對，鎖住
-  if (this === firstCard) return; // 避免點同一張卡
+function startTimer() {
+  if (timer) return;
+  timer = setInterval(() => {
+    time++;
+    timerEl.textContent = time;
+  }, 1000);
+}
 
-  this.classList.add('flip');   // 加上翻牌樣式
+function stopTimer() {
+  clearInterval(timer);
+  timer = null;
+}
+
+function flipCard() {
+  if (lockBoard) return;
+  if (this === firstCard) return;
+
+  this.classList.add('flip');
+  startTimer(); // 第一次翻牌才開始計時
 
   if (!firstCard) {
-    firstCard = this;           // 記錄第一張
+    firstCard = this;
     return;
   }
 
-  secondCard = this;            // 記錄第二張
+  secondCard = this;
   lockBoard = true;
 
   checkMatch();
@@ -51,18 +79,17 @@ function checkMatch() {
   const img2 = secondCard.querySelector('img').src;
 
   if (img1 === img2) {
-    // 配對成功
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
+    matches++;
     resetBoard();
-    matches += 1;
 
-    // 全部配對成功
     if (matches === emojis.length) {
-      alert("全部配對成功！");
+      stopTimer();
+      alert(`全部配對成功！花了 ${time} 秒`);
+      restartBtn.style.display = "inline-block";
     }
   } else {
-    // 配對失敗 → 翻回去
     setTimeout(() => {
       firstCard.classList.remove('flip');
       secondCard.classList.remove('flip');
@@ -74,3 +101,8 @@ function checkMatch() {
 function resetBoard() {
   [firstCard, secondCard, lockBoard] = [null, null, false];
 }
+
+/* ===== 再來一次（結束後才能按） ===== */
+restartBtn.addEventListener('click', () => {
+  location.reload();
+});

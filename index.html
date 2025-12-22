@@ -10,16 +10,14 @@
 <body>
     <h1>翻牌記憶遊戲</h1>
 
-    <!--計時加重來-->
+    <!-- 新增：計時 + 再來一次（結束後才顯示） -->
     <div id="info">
-        <span>時間:span id="timer">0</span>秒</div><span></span>
-         <button id="restartBtn" style="display:none;">再來一次</button>
+        <span>時間：<span id="timer">0</span> 秒</span>
+        <button id="restartBtn" style="display:none;">再來一次</button>
     </div>
 
-    <!--  只留下這個，裡面不要手動放卡片 -->
+    <!-- 原本的遊戲板（完全不動） -->
     <div id="gameBoard"></div>
-
-    <p id="message"></p>
 
     <script src="script.js"></script>
 </body>
